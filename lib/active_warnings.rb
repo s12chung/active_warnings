@@ -50,6 +50,7 @@ module ActiveWarnings
   def has_warnings?(context=nil)
     !no_warnings?(context)
   end
+  alias_method :unsafe?, :has_warnings?
 
   def no_warnings?(context=nil)
     @run_warning_validations = true
@@ -57,4 +58,6 @@ module ActiveWarnings
   ensure
     @run_warning_validations = nil
   end
+  alias_method :safe?, :no_warnings?
+
 end
