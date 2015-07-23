@@ -47,17 +47,24 @@ module ActiveWarnings
     @warnings ||= ActiveModel::Errors.new(self)
   end
 
-  def has_warnings?(context=nil)
-    !no_warnings?(context)
+  def unsafe?(context=nil)
+    !safe?(context)
   end
-  alias_method :unsafe?, :has_warnings?
+  alias_method :has_warnings?, :unsafe?
 
-  def no_warnings?(context=nil)
+  def safe?(context=nil)
+    with_warnings { valid?(context) }
+  end
+  alias_method :no_warnings?, :safe?
+
+  def with_warnings
     @run_warning_validations = true
-    valid?(context)
+    yield
   ensure
     @run_warning_validations = nil
   end
-  alias_method :safe?, :no_warnings?
 
+  def with_warnings?
+    !!@run_warning_validations
+  end
 end

@@ -59,14 +59,26 @@ describe ActiveWarnings do
       end
     end
 
-    describe "#no_warnings?" do
-      subject { instance.no_warnings? }
+    describe "#safe?" do
+      subject { instance.safe? }
 
       it "only sets the warnings" do
         subject
         expect(subject).to eql false
         expect(instance.warnings.keys).to eql [:warning_name]
         expect(instance.errors.keys).to eql []
+      end
+    end
+
+    describe "#with_warnings" do
+      it "sets the instance_variable in the block and brings it back" do
+        expect {
+          instance.with_warnings do
+            expect(instance.instance_variable_get(:@run_warning_validations)).to eql true
+            raise "test"
+          end
+        }.to raise_error("test")
+        expect(instance.instance_variable_get(:@run_warning_validations)).to eql nil
       end
     end
   end
