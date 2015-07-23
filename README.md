@@ -37,7 +37,12 @@ end
 
 model = BasicModel.new(name: "a")
 model.valid? # => true
-model.safe? == model.no_warnings? # => false
-model.warnings.keys # => [:warning_name]
 model.errors.keys # => []
+
+model.safe? # => false
+model.no_warnings? # => false, equivalent to #safe?
+model.warnings.keys # => [:warning_name]
+
+model.with_warnings? # => false, is true if warnings are on (within #safe call)
+
 ```
