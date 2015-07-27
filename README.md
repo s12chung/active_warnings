@@ -43,6 +43,6 @@ model.safe? # => false
 model.no_warnings? # => false, equivalent to #safe?
 model.warnings.keys # => [:warning_name]
 
-model.with_warnings? # => false, is true if warnings are on (within #safe call)
+model.using_warnings? # => false, is true if warnings are used (within #safe call)
 
 ```

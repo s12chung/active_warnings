@@ -70,10 +70,10 @@ describe ActiveWarnings do
       end
     end
 
-    describe "#with_warnings" do
+    describe "#using_warnings" do
       it "sets the instance_variable in the block and brings it back" do
         expect {
-          instance.with_warnings do
+          instance.using_warnings do
             expect(instance.instance_variable_get(:@run_warning_validations)).to eql true
             raise "test"
           end
