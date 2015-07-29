@@ -24,25 +24,33 @@ Or install it yourself as:
 class BasicModel
   include ActiveWarnings
 
-  attr_accessor :name, :warning_name
+  attr_accessor :name
+  def initialize(name); @name = name; end
 
   validates :name, presence: true
 
   warnings do
-    # to use same validators,
-    # calling #valid? or #errors will be #no_errors? and #warnings, respectively (on self or record)
-    validates :warning_name, presence: true
+    # to share the same validators, error related methods now correspond to warnings. ie:
+    # the method #valid? == #safe? and #errors == #warnings
+    validates :name, absence: true
   end
 end
 
-model = BasicModel.new(name: "a")
+#
+# Basic Use
+#
+model = BasicModel.new("some_name")
 model.valid? # => true
 model.errors.keys # => []
 
 model.safe? # => false
 model.no_warnings? # => false, equivalent to #safe?
-model.warnings.keys # => [:warning_name]
+model.unsafe? # => true
+model.has_warnings? # => true, equivalent to #unsafe?
+model.warnings.keys # => [:name]
 
-model.using_warnings? # => false, is true if warnings are used (within #safe call)
-
+#
+# Advanced Use
+#
+model.using_warnings? # => false, is true in validators when calling #safe?
 ```
