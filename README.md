@@ -1,4 +1,4 @@
-# ActiveWarnings
+# ActiveWarnings [![Build Status](https://travis-ci.org/s12chung/active_warnings.svg?branch=test_active_model)](https://travis-ci.org/s12chung/active_warnings)
 
 `ActiveModel::Validations` separate for warnings.
 
