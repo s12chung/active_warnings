@@ -27,8 +27,6 @@ class BasicModel
   attr_accessor :name
   def initialize(name); @name = name; end
 
-  validates :name, presence: true
-
   warnings do
     # to share the same validators, error related methods now correspond to warnings. ie:
     # the method #valid? == #safe? and #errors == #warnings
@@ -40,13 +38,14 @@ end
 # Basic Use
 #
 model = BasicModel.new("some_name")
-model.valid? # => true
-model.errors.keys # => []
 
+# like `#valid?`
 model.safe? # => false
 model.no_warnings? # => false, equivalent to #safe?
+# like `#invalid?`
 model.unsafe? # => true
 model.has_warnings? # => true, equivalent to #unsafe?
+# like `#errors`
 model.warnings.keys # => [:name]
 
 #
