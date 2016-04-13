@@ -1,6 +1,6 @@
 # ActiveWarnings [![Build Status](https://travis-ci.org/s12chung/active_warnings.svg?branch=test_active_model)](https://travis-ci.org/s12chung/active_warnings)
 
-`ActiveModel::Validations` separate for warnings.
+Separate `ActiveModel::Validations` errors for warnings.
 
 ## Installation
 
@@ -28,9 +28,10 @@ class BasicModel
   def initialize(name); @name = name; end
 
   warnings do
-    # to share the same validators, error related methods now correspond to warnings. ie:
-    # the method #valid? == #safe? and #errors == #warnings
     validates :name, absence: true
+    
+    # Example custom validation
+    validate { errors.add(:name, "is some_name") if name == "some_name" }
   end
 end
 
@@ -39,6 +40,10 @@ end
 #
 model = BasicModel.new("some_name")
 
+# Regular ActiveModel::Validations errors work separately
+model.valid? # => true		
+model.errors.full_messages # => []
+
 # like `#valid?`
 model.safe? # => false
 model.no_warnings? # => false, equivalent to #safe?
@@ -46,7 +51,7 @@ model.no_warnings? # => false, equivalent to #safe?
 model.unsafe? # => true
 model.has_warnings? # => true, equivalent to #unsafe?
 # like `#errors`
-model.warnings.keys # => [:name]
+model.warnings.full_messages # => ["Name must be blank", "Name is some_name"]
 
 #
 # Advanced Use
