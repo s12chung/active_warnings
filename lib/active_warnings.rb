@@ -7,10 +7,9 @@ require 'active_warnings/validator'
 
 module ActiveWarnings
   extend ActiveSupport::Concern
+  include ActiveModel::Validations
 
   included do
-    include ActiveModel::Validations
-
     define_callbacks :validate_warning, scope: :name
 
     def errors
