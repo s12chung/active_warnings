@@ -1,10 +1,22 @@
 language: ruby
 script: bundle exec rspec
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+  - 1.9
+  - 2.0
+  - 2.1
+  - 2.2.5
+  - 2.3.1
   - ruby-head
+gemfile:
+  - gemfiles/activemodel_4.gemfile
+  - gemfiles/activemodel_5.gemfile
 matrix:
   allow_failures:
     - rvm: ruby-head
+  exclude:
+    - rvm: 1.9
+      gemfile: gemfiles/activemodel_5.gemfile
+    - rvm: 2.0
+      gemfile: gemfiles/activemodel_5.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/activemodel_5.gemfile
