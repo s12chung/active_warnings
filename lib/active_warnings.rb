@@ -1,7 +1,6 @@
 require "active_warnings/version"
 
 require 'active_model'
-require 'active_support/all'
 
 require 'active_warnings/validator'
 
